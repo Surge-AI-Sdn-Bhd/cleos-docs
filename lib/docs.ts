@@ -1,8 +1,16 @@
+export type ArticleFormat = "procedure" | "reference";
+
+// "verify" renders the closing card as "Before you finish" (confirm the result
+// of the task). "note" renders it as "Good to know" (a standing caution or fact).
+export type CheckKind = "verify" | "note";
+
 export type Article = {
   title: string;
   slug: string;
   summary: string;
   role: string;
+  format: ArticleFormat;
+  checkKind: CheckKind;
   steps: string[];
   check: string;
 };
@@ -22,13 +30,19 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
+// checkKind defaults to "note": in this catalogue most closing cards are
+// standing cautions rather than result confirmations. Pass { checkKind: "verify" }
+// for genuine finish-line checks, and { format: "reference" } for overview articles.
+type ArticleOptions = { format?: ArticleFormat; checkKind?: CheckKind };
+
 const article = (
   title: string,
   summary: string,
   role: string,
   steps: string[],
   check: string,
-): Article => ({ title, slug: slugify(title), summary, role, steps, check });
+  { format = "procedure", checkKind = "note" }: ArticleOptions = {},
+): Article => ({ title, slug: slugify(title), summary, role, format, checkKind, steps, check });
 
 const category = (
   title: string,
@@ -43,12 +57,12 @@ export const categories: DocCategory[] = [
         "Use the sidebar to move between patient records, appointments, the queue, consultations, and the tools available to your role.",
         "Open a patient or visit before recording clinical work, dispensing, or taking payment.",
         "Return to the saved record after an important action to confirm the result.",
-      ], "Your clinic's permissions determine which areas and controls you can see."),
+      ], "Your clinic's permissions determine which areas and controls you can see.", { format: "reference" }),
       article("Roles and access in Cleos", "Understand what each Cleos role normally handles.", "All users", [
         "Owner manages organisation-level controls. Admin helps run clinic operations, finance, stock, and reporting.",
         "Doctor and Locum Doctor see patients, document consultations, prescribe, and send visits to dispensary.",
         "Assistant supports registration, appointments, the queue, dispensing, printing, and payments where permitted.",
-      ], "If a control is unavailable, ask an Owner or Admin. Never use another staff member's account."),
+      ], "If a control is unavailable, ask an Owner or Admin. Never use another staff member's account.", { format: "reference" }),
       article("Find your way around Cleos", "Move from a task to the right record without losing context.", "All users", [
         "Choose the area for the task from the main sidebar.",
         "Use search, filters, and dates to find the correct patient, visit, invoice, or stock item.",
@@ -60,7 +74,7 @@ export const categories: DocCategory[] = [
         "Assistant finds or creates the patient and adds them to the queue.",
         "Doctor or Locum Doctor starts the visit, records notes and prescriptions, then sends the visit to dispensary.",
         "Assistant prepares labels, dispenses, checks the invoice, records payment, and completes the hand-off.",
-      ], "Reopen the visit and invoice to verify saved status and balances before ending the day."),
+      ], "Reopen the visit and invoice to verify saved status and balances before ending the day.", { checkKind: "verify" }),
       article("Patient-to-payment hand-off", "Keep the patient, visit, medicine, and payer aligned.", "Assistant · Doctor · Locum Doctor", [
         "Confirm the patient and active visit before the clinician begins work.",
         "Review every medicine line and direction before the visit reaches dispensary.",
@@ -91,7 +105,7 @@ export const categories: DocCategory[] = [
         "Open the confirmed patient profile and choose the relevant section.",
         "Change only the information you have verified; keep notes factual and relevant.",
         "Review the saved detail, flag, or attachment in the same profile.",
-      ], "Check that an attachment belongs to this patient before saving it."),
+      ], "Check that an attachment belongs to this patient before saving it.", { checkKind: "verify" }),
       article("Review a patient's visit history", "Use the patient profile to understand previous care.", "Doctor · Locum Doctor · Assistant", [
         "Find and open the correct patient profile.",
         "Open the visits or relevant history tab and select the visit you need.",
@@ -128,7 +142,7 @@ export const categories: DocCategory[] = [
         "In Progress: the Doctor or Locum Doctor is seeing the patient.",
         "In Dispensary: consultation work is complete and the patient is waiting for medicine and payment.",
         "Completed: the medicine and payment hand-off is finished.",
-      ], "Check the status on the saved visit, especially after a hand-off."),
+      ], "Check the status on the saved visit, especially after a hand-off.", { format: "reference" }),
       article("Remove an early-stage visit from the queue", "Understand when Remove from Queue is available.", "Authorised staff", [
         "Find the correct queue row and verify the visit is Waiting or In Progress.",
         "Use Remove from Queue only when the early visit should no longer appear in the queue.",
@@ -145,12 +159,12 @@ export const categories: DocCategory[] = [
         "Open the confirmed active visit and enter the observations that were actually taken.",
         "Record clear case notes and any relevant clinical findings.",
         "Save, then reopen the visit to verify the notes and values.",
-      ], "Check units and patient identity before saving clinical values."),
+      ], "Check units and patient identity before saving clinical values.", { checkKind: "verify" }),
       article("Send a visit to dispensary", "Hand a completed consultation to the dispensing team.", "Doctor · Locum Doctor", [
         "Finish and review clinical notes, medicines, and any required documents.",
         "Send the visit to dispensary using the visit control.",
         "Confirm the visit moves to In Dispensary and tell the Assistant about any special instructions.",
-      ], "Review prescription lines before hand-off; the Assistant uses them for labelling and dispensing."),
+      ], "Review prescription lines before hand-off; the Assistant uses them for labelling and dispensing.", { checkKind: "verify" }),
     ] },
   ]),
   category("Prescribing and dispensing", "Keep prescriptions, labels, and physical medicine consistent.", [
@@ -183,7 +197,7 @@ export const categories: DocCategory[] = [
         "Open the confirmed visit and choose Print MC in Billing & Prescription.",
         "Select the correct certificate details and date range.",
         "Inspect the preview before printing or sharing the output.",
-      ], "Printing does not verify that visit data saved correctly; check the saved visit separately."),
+      ], "Printing does not verify that visit data saved correctly; check the saved visit separately.", { checkKind: "verify" }),
       article("Review previous clinical documents", "Find earlier certificates, notes, and dispensed items.", "Doctor · Locum Doctor · authorised staff", [
         "Open the patient's profile and choose the relevant previous visit.",
         "Review the available certificate, case note, dispensed item, or account view.",
@@ -197,7 +211,7 @@ export const categories: DocCategory[] = [
         "Find the patient, then open Results or the patient's test results.",
         "Choose the correct test type and enter or attach the reviewed outcome.",
         "Save and check the result from the patient profile.",
-      ], "Confirm the result and its attachment belong to the same patient before saving."),
+      ], "Confirm the result and its attachment belong to the same patient before saving.", { checkKind: "verify" }),
       article("Attach result documents to the right patient", "Keep external result files with the correct record.", "Doctor · Locum Doctor · authorised staff", [
         "Open the confirmed patient and the relevant result.",
         "Check the document's name, date, and patient identifiers before attaching it.",
@@ -226,7 +240,7 @@ export const categories: DocCategory[] = [
         "Open the saved letter from the patient profile.",
         "Check recipient, date, medical wording, and any filled fields.",
         "Preview and print or share according to clinic policy.",
-      ], "Confirm the printout matches the saved version."),
+      ], "Confirm the printout matches the saved version.", { checkKind: "verify" }),
     ] },
   ]),
   category("Billing, payments, and corrections", "Keep charges, payments, and corrections traceable.", [
@@ -271,7 +285,7 @@ export const categories: DocCategory[] = [
         "Review the invoice and the amount due from the patient separately from the panel amount.",
         "Record any patient co-payment against the correct payer.",
         "Record and reconcile panel settlement using the approved clinic process.",
-      ], "Verify the resulting patient and corporate outstanding balances separately."),
+      ], "Verify the resulting patient and corporate outstanding balances separately.", { checkKind: "verify" }),
     ] },
     { title: "Pricing and loyalty", articles: [
       article("Manage tier pricing", "Review the price level that applies to an item or patient.", "Owner · Admin", [
@@ -369,19 +383,19 @@ export const categories: DocCategory[] = [
         "Use the Booking preview in both phone and desktop views.",
         "Check names, contact fields, available providers, times, and patient-facing text.",
         "Publish only after the clinic confirms that the change is ready.",
-      ], "After publishing, open the public page and confirm it reflects the approved change."),
+      ], "After publishing, open the public page and confirm it reflects the approved change.", { checkKind: "verify" }),
     ] },
     { title: "Organisation and branch settings", articles: [
       article("Manage organisation details", "Review settings that affect the whole clinic organisation.", "Owner", [
         "Open Settings and identify whether the change applies to the organisation or a branch.",
         "Check the existing value and make the smallest approved change.",
         "Save, then verify the setting in the intended scope.",
-      ], "Organisation settings can affect more than one branch; confirm scope before saving."),
+      ], "Organisation settings can affect more than one branch; confirm scope before saving.", { checkKind: "verify" }),
       article("Manage payment methods, templates, print setup, and test types", "Keep branch tools aligned with clinic policy.", "Owner · Admin", [
         "Open the relevant Settings section for the task.",
         "Review the active branch or organisation scope where it is available.",
         "Make the approved change and preview or test the result before routine use.",
-      ], "A print preview checks layout; verify the saved data separately."),
+      ], "A print preview checks layout; verify the saved data separately.", { checkKind: "verify" }),
     ] },
     { title: "Users and access", articles: [
       article("Add or manage a user", "Give staff the role and access they need for their work.", "Owner · Admin", [
