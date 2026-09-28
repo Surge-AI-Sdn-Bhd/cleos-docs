@@ -135,10 +135,10 @@ export const categories: DocCategory[] = [
   category("Queue and consultation", "Move each visit through clinical care with clear ownership.", [
     { title: "Manage the queue", articles: [
       article("Add a patient to the queue", "Prepare a confirmed patient for the clinician.", "Assistant", [
-        "Find the correct patient and check for an existing active visit.",
-        "Add the patient to today's queue with the appropriate provider and details.",
-        "Confirm the queue row shows the right patient and Waiting status.",
-      ], "Avoid adding the same active visit twice."),
+        "From Queue, use Search patients to find the correct patient. Check for an existing active visit before selecting the patient.",
+        "Select the patient, choose a room if prompted, and add them to the queue. Confirm their row appears with Waiting status.",
+        "Alternatively, open Patients, find the correct patient, and use Add to queue on their row. Choose a room if prompted, then confirm the Waiting entry on Queue.",
+      ], "Check the patient and current visit before adding them; do not create a duplicate active visit."),
       article("Understand Waiting, In Progress, In Dispensary, and Completed", "Read the four queue statuses as a patient hand-off.", "Assistant · Doctor · Locum Doctor", [
         "Waiting: the patient is waiting to see a Doctor or Locum Doctor.",
         "In Progress: the Doctor or Locum Doctor is seeing the patient.",

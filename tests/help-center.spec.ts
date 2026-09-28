@@ -49,7 +49,7 @@ test("direct article URL, breadcrumbs, and related links work", async ({ page },
   await page.goto("./articles/add-or-update-a-prescription/");
   await expect(page.getByRole("heading", { name: "Add or update a prescription" })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", { name: "Prescribing and dispensing" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Before you finish" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Good to know" })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("article.png"), fullPage: true });
 });
 
@@ -192,6 +192,16 @@ test("expanded screenshot guides load across article topics", async ({ page }, t
   }
 });
 
+test("queue guide shows both entry points, with Queue first", async ({ page }) => {
+  await page.goto("./articles/add-a-patient-to-the-queue/");
+  const steps = page.locator(".doc-main .steps > li");
+  await expect(steps.first()).toContainText("From Queue");
+  await expect(steps.nth(2)).toContainText("Alternatively, open Patients");
+  const screenshots = page.locator("#visual-guide .screenshot-figure img");
+  await expect(screenshots.first()).toHaveAttribute("src", /queue-test-full\.png$/);
+  await expect(screenshots.nth(1)).toHaveAttribute("src", /patients-list\.jpg$/);
+});
+
 test("screenshot opens in-site, zooms, pans, and returns focus", async ({ page }, testInfo) => {
   await page.goto("./articles/find-your-way-around-cleos/");
   const originalUrl = page.url();
@@ -254,7 +264,7 @@ for (const [slug, count] of [
     const visual = page.locator("#visual-guide");
     await expect(visual.getByRole("heading", { name: "Visual guide" })).toBeVisible();
     await expect(visual.locator(".diagram-steps li")).toHaveCount(count);
-    await expect(visual.getByText("Workflow illustration, not a Cleos screen.")).toBeVisible();
+    await expect(visual.getByText("Workflow illustration, not a Cleos screen.")).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)).toBe(false);
     if (slug === "a-single-visit-start-to-finish" && testInfo.project.name === "desktop") {
       await page.screenshot({ path: testInfo.outputPath("clinic-flow.png"), fullPage: true });
