@@ -1,0 +1,75 @@
+export type ArticleImage = {
+  file: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+};
+
+const screens = {
+  patients: { file: "patients-list.jpg", alt: "Patients list filtered to fictional TEST records, with search and Add to queue actions.", width: 1872, height: 1350 },
+  createPatient: { file: "create-patient.jpg", alt: "Create patient form with personal information and the Add patient to queue option.", width: 1872, height: 1350 },
+  appointment: { file: "book-appointment.png", alt: "Unsaved appointment form with patient, doctor, service, date, and time fields.", width: 576, height: 1350 },
+  queue: { file: "queue-test-full.png", alt: "Queue with fictional TEST visits in Waiting, In Progress, In Dispensary, and Completed states.", width: 1440, height: 900 },
+  vitals: { file: "visit-vital-signs.png", alt: "Vital Signs form with blood pressure, heart rate, respiratory rate, temperature, consciousness, oxygen saturation, weight, and height fields.", width: 1392, height: 414 },
+  prescription: { file: "visit-billing-controls.png", alt: "Billing and Prescriptions controls with medicine search, item type filter, Print MC, Outside Prescription, and Print Labels.", width: 1392, height: 164 },
+  results: { file: "results.png", alt: "Results list with fictional TEST patients, test names, dates, and statuses.", width: 1440, height: 900 },
+  feedback: { file: "create-feedback-template.png", alt: "Unsaved feedback template form with template name and question fields.", width: 384, height: 900 },
+  invoices: { file: "invoices.png", alt: "Invoices list with fictional TEST invoice numbers, patient names, amounts, and outstanding balances.", width: 1440, height: 900 },
+  inventory: { file: "inventory.jpg", alt: "Inventory list filtered to fictional TEST items, with names, stock levels, and Add Item.", width: 1872, height: 1350 },
+  stockAdjustment: { file: "stock-adjustment.png", alt: "Unsaved stock adjustment form with item, quantity, expiry, supplier, and reason fields.", width: 672, height: 879 },
+  stockMovements: { file: "stock-movements.png", alt: "Stock Movements view with type and date filters plus export and print controls.", width: 1440, height: 900 },
+  reports: { file: "reports.png", alt: "Reports menu grouped into day-end, sales and money, clinical, and stock reports.", width: 1440, height: 900 },
+  rewards: { file: "rewards.png", alt: "Rewards and Loyalty overview with summary tiles and quick actions in TEST.", width: 1440, height: 900 },
+  catalog: { file: "catalog.png", alt: "Settings catalogue listing inventory types, categories, units, and their system status.", width: 1440, height: 900 },
+  paymentMethods: { file: "payment-methods.png", alt: "Payment Methods settings with system and custom payment methods.", width: 1440, height: 900 },
+  templates: { file: "templates.png", alt: "Templates settings with MC, letterhead, letter, email, and WhatsApp tabs.", width: 1440, height: 900 },
+  printSetup: { file: "print-setup.png", alt: "Print Setup settings with fictional TEST branch header and footer fields.", width: 1440, height: 900 },
+  testTypes: { file: "test-types.png", alt: "Test Types settings with lab test names, descriptions, and Add Test Type.", width: 1440, height: 900 },
+  bookingSite: { file: "public-booking.png", alt: "Booking Site settings beside a live phone preview of the public booking page.", width: 1440, height: 900 },
+  bookingServices: { file: "booking-services.png", alt: "Booking Categories and services editor beside the phone preview.", width: 1440, height: 900 },
+  bookingForm: { file: "booking-form-builder.png", alt: "Booking form builder showing required and optional patient fields.", width: 1440, height: 900 },
+  bookingPublish: { file: "booking-publish.png", alt: "Booking Publish tab showing the public URL, publication status, and phone preview.", width: 1440, height: 900 },
+  customize: { file: "customize-page.png", alt: "Customize Page settings showing the available Queue layout configuration.", width: 1440, height: 900 },
+} as const satisfies Record<string, Omit<ArticleImage, "caption">>;
+
+const shot = (screen: keyof typeof screens, caption: string): ArticleImage => ({ ...screens[screen], caption });
+
+export const articleImages: Record<string, ArticleImage[]> = {
+  "welcome-to-cleos": [shot("queue", "Cleos keeps the clinic areas in the left menu. This TEST queue shows how visits move between teams.")],
+  "find-your-way-around-cleos": [shot("patients", "Choose an area from the sidebar, then narrow the list before opening a record. The names shown are fictional TEST data."), shot("reports", "Reports uses the same navigation pattern, with task groups inside the page.")],
+  "a-typical-clinic-day": [shot("queue", "The queue shows the hand-off from Waiting through In Progress and In Dispensary to Completed. All patients shown are fictional TEST records."), shot("invoices", "After dispensing, check the invoice and outstanding balance in the TEST invoice list.")],
+  "patient-to-payment-hand-off": [shot("queue", "Verify the patient and visit status before clinical work or dispensing."), shot("invoices", "Match the visit to the invoice and check the amount still outstanding before payment.")],
+  "find-a-patient-before-creating-a-record": [shot("patients", "Search the patient list before creating a new record. The names shown are fictional TEST data.")],
+  "create-a-patient-record": [shot("createPatient", "Start with Personal, then review Medical and Next of kin. Add the patient to the queue only when needed. This TEST form was not submitted.")],
+  "book-an-appointment": [shot("appointment", "Choose the patient, service, and time before saving. This is an unsaved TEST form with no patient data shown.")],
+  "add-a-patient-to-the-queue": [shot("patients", "From the confirmed patient row, choose Add to queue. These are fictional TEST records."), shot("queue", "Return to Queue and confirm the visit appears with the expected patient and status.")],
+  "understand-waiting-in-progress-in-dispensary-and-completed": [shot("queue", "Compare the four status badges on these fictional TEST visits before acting on a queue entry.")],
+  "remove-an-early-stage-visit-from-the-queue": [shot("queue", "The Remove action appears beside early-stage visits in this TEST queue; later statuses do not show it.")],
+  "start-a-visit": [shot("queue", "Open the Visit action on the correct patient row after checking the status."), shot("vitals", "A visit opens with clinical fields such as Vital Signs; confirm the patient before entering anything.")],
+  "record-vital-signs-and-case-notes": [shot("vitals", "Record the observations in their labelled fields, then continue to the case note below.")],
+  "send-a-visit-to-dispensary": [shot("queue", "After the doctor sends the visit, confirm its badge changes to In Dispensary on Queue.")],
+  "add-or-update-a-prescription": [shot("prescription", "Use the medicine search in Billing & Prescriptions, then review the selected line before saving. This TEST capture shows the controls, not a completed order.")],
+  "review-prescription-lines-before-saving": [shot("prescription", "Return to Billing & Prescriptions to review the selected medicine, quantity, and directions before finishing the visit.")],
+  "prepare-and-print-medicine-labels": [shot("prescription", "Print Labels is in Billing & Prescriptions. Check the saved prescription and physical medicine first.")],
+  "print-a-medical-certificate": [shot("prescription", "Print MC is available from the visit's Billing & Prescriptions section."), shot("templates", "Clinic-approved MC templates are managed in Settings → Templates.")],
+  "create-and-review-a-test-result": [shot("results", "The TEST Results list shows patient, test, date, and status. Open the correct row to review the saved result.")],
+  "send-follow-up-messages": [shot("feedback", "Prepare the approved questions in a feedback template before sending a follow-up link. This form was not submitted.")],
+  "review-an-invoice": [shot("invoices", "Search the TEST invoice list and compare the patient, invoice amount, and outstanding amount before opening it.")],
+  "record-a-payment": [shot("invoices", "Use the invoice list to find the correct TEST invoice and outstanding balance before recording payment.")],
+  "print-an-invoice-or-receipt": [shot("invoices", "The invoice list includes print controls. Open the correct invoice and confirm its status before printing.")],
+  "reconcile-related-payments-after-a-correction": [shot("invoices", "Compare the invoice amount and outstanding balance after a correction; this TEST list shows where to check them.")],
+  "use-rewards-and-loyalty": [shot("rewards", "The TEST overview shows the loyalty areas and quick actions available to authorised staff.")],
+  "maintain-item-and-service-details": [shot("inventory", "Search the catalogue and check stock and item details before adding another entry. Items shown are fictional TEST data."), shot("catalog", "Settings → Categories & Units controls the inventory types and units used by catalogue items.")],
+  "record-stock-movements-and-adjustments": [shot("stockMovements", "Use Stock Movements to review the selected dates and movement type."), shot("stockAdjustment", "Select the right item and movement type, enter the quantity and reason, then verify the saved balance. This TEST form was not submitted.")],
+  "investigate-stock-discrepancies": [shot("stockMovements", "Filter Stock Movements by date and type before deciding whether an adjustment is needed.")],
+  "choose-the-right-report": [shot("reports", "Choose the report group that matches the question: day-end, sales, clinical, or stock.")],
+  "financial-reports": [shot("reports", "The Sales and money group contains business, patient, provider, product, and accounts receivable reports.")],
+  "clinical-and-patient-reports": [shot("reports", "Use the Clinical group for visit-type, clinical, and customer activity.")],
+  "inventory-reports": [shot("reports", "The Stock group contains inventory, movement, adjustment, and stock-taking reports.")],
+  "set-up-the-booking-site": [shot("bookingSite", "Edit the booking site's name and appearance while checking the phone preview."), shot("bookingForm", "Review the fields patients will complete before the booking form is published.")],
+  "manage-services-and-appointment-availability": [shot("bookingServices", "Add or arrange services in Categories & services, then verify what appears in the live preview.")],
+  "preview-and-publish-booking-changes": [shot("bookingPublish", "Check the public URL, publication status, and phone preview before changing availability.")],
+  "manage-payment-methods-templates-print-setup-and-test-types": [shot("paymentMethods", "Review which payment methods are active for the clinic."), shot("templates", "Use Templates for MC, letterhead, letter, email, and WhatsApp wording."), shot("printSetup", "Check the TEST branch header and footer in Print Setup before producing documents."), shot("testTypes", "Maintain lab test names and descriptions in Test Types.")],
+  "personalise-your-cleos-layout": [shot("customize", "Customize Page shows the currently available layout controls; some areas are still marked Coming soon.")],
+};

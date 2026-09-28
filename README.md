@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cleos Help Center
 
-## Getting Started
+A task-based, static documentation site for Cleos clinic teams.
 
-First, run the development server:
+## Local development
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000/cleos-docs/`. The default `/cleos-docs` path matches the GitHub Pages project URL.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run test:export
+npm run test:e2e
+```
 
-## Learn More
+The export appears in `out/`. The existing GitHub Actions workflow publishes this directory when approved changes reach `main`. No application server or database is required for the Help Center.
 
-To learn more about Next.js, take a look at the following resources:
+`npm run preview` serves that export at `http://127.0.0.1:3108/cleos-docs/`. The end-to-end suite runs Chromium against this production export at desktop, tablet, and mobile widths.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+For a future custom domain, first configure the domain and DNS in the repository's GitHub Pages settings. Then build with `CLEOS_DOCS_BASE_PATH=` (empty value) so routes are generated at the domain root; configure that value in the workflow when the domain is ready. Do not add a `CNAME` file or switch the base path before the domain is configured.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Content
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Categories, groups, and articles are in `lib/docs.ts`. Each article needs a unique title, a short summary, audience, steps, and a final check. The site statically generates each topic and article route. Keep instructions aligned with the live product and exclude patient data from committed content.

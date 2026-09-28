@@ -1,11 +1,12 @@
 import type { NextConfig } from "next";
 
-// Served from https://<user>.github.io/cleos-docs, so every URL needs this prefix.
-const basePath = "/cleos-docs";
+const basePath = process.env.CLEOS_DOCS_BASE_PATH ?? "/cleos-docs";
 
 const nextConfig: NextConfig = {
   output: "export",
   basePath,
+  trailingSlash: true,
+  turbopack: { root: process.cwd() },
   // `next/link` and `_next/*` assets get `basePath` automatically, but
   // `next/image` does not, so expose it for prefixing image `src` values.
   env: {
