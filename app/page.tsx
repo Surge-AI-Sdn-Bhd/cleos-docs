@@ -10,7 +10,7 @@ export default function Home() {
     </aside>
     <div className="doc-main">
       <div className="index-heading">
-        <span className="section-kicker">CLEOS HELP CENTER</span>
+        <span className="section-kicker">CLEOS HELP CENTRE</span>
         <h1>All topics</h1>
         <p>Search for a task or browse the guides below.</p>
         <div className="index-search"><Search articles={allArticles.map(({ title, slug, summary }) => ({ title, slug, summary }))} /></div>

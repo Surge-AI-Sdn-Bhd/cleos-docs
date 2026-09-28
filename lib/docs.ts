@@ -1,4 +1,6 @@
-export type ArticleFormat = "procedure" | "reference";
+// "procedure": ordered steps you perform. "reference": an orientation overview.
+// "checklist": points to confirm/verify at each checkpoint, not actions to perform.
+export type ArticleFormat = "procedure" | "reference" | "checklist";
 
 // "verify" renders the closing card as "Before you finish" (confirm the result
 // of the task). "note" renders it as "Good to know" (a standing caution or fact).
@@ -53,15 +55,15 @@ const category = (
 export const categories: DocCategory[] = [
   category("Start here", "The essentials for a confident first day in Cleos.", [
     { title: "Orientation", articles: [
-      article("Welcome to Cleos", "A quick introduction to the work Cleos brings together.", "All users", [
-        "Use the sidebar to move between patient records, appointments, the queue, consultations, and the tools available to your role.",
-        "Open a patient or visit before recording clinical work, dispensing, or taking payment.",
-        "Return to the saved record after an important action to confirm the result.",
+      article("Welcome to Cleos", "How Cleos fits patient care, dispensing, and billing into one system.", "All users", [
+        "The sidebar moves you between patient records, appointments, the queue, consultations, and the tools available to your role.",
+        "Most clinical and financial work happens inside a visit, which you open from the Queue or the patient profile.",
+        "The patient profile ties a person's visits, results, letters, invoices, and appointments together in one place.",
       ], "Your clinic's permissions determine which areas and controls you can see.", { format: "reference" }),
       article("Roles and access in Cleos", "Understand what each Cleos role normally handles.", "All users", [
-        "Owner manages organisation-level controls. Admin helps run clinic operations, finance, stock, and reporting.",
-        "Doctor and Locum Doctor see patients, document consultations, prescribe, and send visits to dispensary.",
-        "Assistant supports registration, appointments, the queue, dispensing, printing, and payments where permitted.",
+        "Owners manage organisation-level controls. Admins help run clinic operations, finance, stock, and reporting.",
+        "Doctors and Locum Doctors start visits, document consultations, prescribe medication, and send visits to dispensary.",
+        "Assistants register patients, book appointments, manage the queue, dispense medication, print labels, invoices, and receipts, and record payments where permitted.",
       ], "If a control is unavailable, ask an Owner or Admin. Never use another staff member's account.", { format: "reference" }),
       article("Find your way around Cleos", "Move from a task to the right record without losing context.", "All users", [
         "Choose the area for the task from the main sidebar.",
@@ -70,16 +72,16 @@ export const categories: DocCategory[] = [
       ], "The patient profile brings visits, results, letters, and appointments together."),
     ] },
     { title: "Daily clinic flow", articles: [
-      article("A typical clinic day", "Follow the usual hand-off from reception to clinician to dispensary.", "Assistant · Doctor · Locum Doctor", [
+      article("A single visit, start to finish", "Follow one patient's visit from reception through consultation to dispensing and payment.", "Assistant · Doctor · Locum Doctor", [
         "Assistant finds or creates the patient and adds them to the queue.",
         "Doctor or Locum Doctor starts the visit, records notes and prescriptions, then sends the visit to dispensary.",
         "Assistant prepares labels, dispenses, checks the invoice, records payment, and completes the hand-off.",
-      ], "Reopen the visit and invoice to verify saved status and balances before ending the day.", { checkKind: "verify" }),
+      ], "Reopen the visit and invoice to verify saved status and balances before completing the visit.", { checkKind: "verify" }),
       article("Patient-to-payment hand-off", "Keep the patient, visit, medicine, and payer aligned.", "Assistant · Doctor · Locum Doctor", [
         "Confirm the patient and active visit before the clinician begins work.",
         "Review every medicine line and direction before the visit reaches dispensary.",
         "Match the physical medicine to the prescription; then confirm billed items, payer, payment, and receipt.",
-      ], "A confirmation notification is not a substitute for checking the saved record."),
+      ], "A confirmation notification is not a substitute for checking the saved record.", { format: "checklist" }),
     ] },
     { title: "Help", articles: [
       article("Get support and report an issue", "Give your clinic's support contact enough context to help quickly.", "All users", [
@@ -98,7 +100,7 @@ export const categories: DocCategory[] = [
       ], "Keep the patient's history in one profile rather than making a new profile for each visit."),
       article("Create a patient record", "Register a patient with accurate identifying and contact details.", "Assistant", [
         "Search for the patient first, then choose Create Patient if no record exists.",
-        "Enter the details required by your clinic, checking spelling and contact information with the patient.",
+        "Enter the details required by your clinic. Check spelling and contact information with the patient.",
         "Save and reopen the profile to confirm that the details were recorded correctly.",
       ], "Do not create a second profile to correct a mistake in an existing one."),
       article("Update patient details, notes, flags, and attachments", "Keep one patient profile current and useful.", "Assistant · clinical staff", [
@@ -108,7 +110,7 @@ export const categories: DocCategory[] = [
       ], "Check that an attachment belongs to this patient before saving it.", { checkKind: "verify" }),
       article("Review a patient's visit history", "Use the patient profile to understand previous care.", "Doctor · Locum Doctor · Assistant", [
         "Find and open the correct patient profile.",
-        "Open the visits or relevant history tab and select the visit you need.",
+        "Open the visits tab and select the visit you need.",
         "Review the recorded notes, medicine, documents, and account information available to your role.",
       ], "Use the existing history as context; do not copy old information into a new visit without checking it."),
     ] },

@@ -1,4 +1,4 @@
-# Cleos Help Center
+# Cleos Help Centre
 
 A task-based, static documentation site for Cleos clinic teams.
 
@@ -19,7 +19,7 @@ npm run test:export
 npm run test:e2e
 ```
 
-The export appears in `out/`. The existing GitHub Actions workflow publishes this directory when approved changes reach `main`. No application server or database is required for the Help Center.
+The export appears in `out/`. The existing GitHub Actions workflow publishes this directory when approved changes reach `main`. No application server or database is required for the Help Centre.
 
 `npm run preview` serves that export at `http://127.0.0.1:3108/cleos-docs/`. The end-to-end suite runs Chromium against this production export at desktop, tablet, and mobile widths.
 

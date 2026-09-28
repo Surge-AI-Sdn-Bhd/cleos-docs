@@ -38,10 +38,10 @@ const shot = (screen: keyof typeof screens, caption: string): ArticleImage => ({
 export const articleImages: Record<string, ArticleImage[]> = {
   "welcome-to-cleos": [shot("queue", "Cleos keeps the clinic areas in the left menu. This TEST queue shows how visits move between teams.")],
   "find-your-way-around-cleos": [shot("patients", "Choose an area from the sidebar, then narrow the list before opening a record. The names shown are fictional TEST data."), shot("reports", "Reports uses the same navigation pattern, with task groups inside the page.")],
-  "a-typical-clinic-day": [shot("queue", "The queue shows the hand-off from Waiting through In Progress and In Dispensary to Completed. All patients shown are fictional TEST records."), shot("invoices", "After dispensing, check the invoice and outstanding balance in the TEST invoice list.")],
+  "a-single-visit-start-to-finish": [shot("queue", "The queue shows the hand-off from Waiting through In Progress and In Dispensary to Completed. All patients shown are fictional TEST records."), shot("invoices", "After dispensing, check the invoice and outstanding balance in the TEST invoice list.")],
   "patient-to-payment-hand-off": [shot("queue", "Verify the patient and visit status before clinical work or dispensing."), shot("invoices", "Match the visit to the invoice and check the amount still outstanding before payment.")],
   "find-a-patient-before-creating-a-record": [shot("patients", "Search the patient list before creating a new record. The names shown are fictional TEST data.")],
-  "create-a-patient-record": [shot("createPatient", "Start with Personal, then review Medical and Next of kin. Add the patient to the queue only when needed. This TEST form was not submitted.")],
+  "create-a-patient-record": [shot("createPatient", "Start with Personal, then review Medical and Next of kin. Add the patient to the queue only when needed.")],
   "book-an-appointment": [shot("appointment", "Choose the patient, service, and time before saving. This is an unsaved TEST form with no patient data shown.")],
   "add-a-patient-to-the-queue": [shot("patients", "From the confirmed patient row, choose Add to queue. These are fictional TEST records."), shot("queue", "Return to Queue and confirm the visit appears with the expected patient and status.")],
   "understand-waiting-in-progress-in-dispensary-and-completed": [shot("queue", "Compare the four status badges on these fictional TEST visits before acting on a queue entry.")],

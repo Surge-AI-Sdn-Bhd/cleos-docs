@@ -15,10 +15,16 @@ createServer(async (request, response) => {
     if (file !== root && !file.startsWith(root + sep)) { response.writeHead(403); response.end(); return; }
     if ((await stat(file)).isDirectory()) file = resolve(file, "index.html");
     const extension = file.slice(file.lastIndexOf("."));
+    const body = await readFile(file);
     response.writeHead(200, { "Content-Type": `${types[extension] ?? "application/octet-stream"}${[".html", ".css", ".js", ".json", ".txt"].includes(extension) ? "; charset=utf-8" : ""}` });
-    response.end(await readFile(file));
+    response.end(body);
   } catch {
-    response.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
-    response.end(await readFile(resolve(root, "404.html")));
+    if (response.headersSent) { response.end(); return; }
+    try {
+      response.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
+      response.end(await readFile(resolve(root, "404.html")));
+    } catch {
+      response.end();
+    }
   }
 }).listen(3108, "127.0.0.1", () => console.log("Static preview at http://127.0.0.1:3108"));

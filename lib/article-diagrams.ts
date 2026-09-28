@@ -4,8 +4,8 @@ export type ArticleDiagram = {
 };
 
 export const articleDiagrams: Record<string, ArticleDiagram> = {
-  "a-typical-clinic-day": {
-    caption: "A typical hand-off. Recheck the saved visit and invoice after each part of the workflow.",
+  "a-single-visit-start-to-finish": {
+    caption: "A single visit's hand-off. Recheck the saved visit and invoice after each part of the workflow.",
     items: [
       { title: "Reception", detail: "Find or create the patient, then add them to the queue." },
       { title: "Consultation", detail: "Start the visit, record notes and prescriptions, and send to dispensary." },

@@ -23,7 +23,7 @@ export function Search({ articles }: { articles: SearchItem[] }) {
   }, []);
 
   return <div className="search-wrap" role="search">
-    <label htmlFor="docs-search" className="sr-only">Search Cleos Help Center articles</label>
+    <label htmlFor="docs-search" className="sr-only">Search Cleos Help Centre articles</label>
     <div className="search-box"><span aria-hidden="true" className="search-icon">⌕</span><input ref={input} id="docs-search" type="search" autoComplete="off" placeholder="Search articles, tasks, and features..." value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && matches[0]) router.push(`/articles/${matches[0].slug}`); }} /><kbd>Ctrl K</kbd></div>
     {normalized && <div className="search-results" aria-live="polite">{matches.length ? matches.map((item) => <Link key={item.slug} href={`/articles/${item.slug}`}><strong>{item.title}</strong><span>{item.summary}</span></Link>) : <p>No results for “{query}”. Try another word or browse the topics below.</p>}</div>}
   </div>;

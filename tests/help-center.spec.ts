@@ -25,7 +25,7 @@ test("home makes every topic reachable", async ({ page }) => {
 
 test("search finds an article and supports Enter", async ({ page }) => {
   await page.goto("./");
-  const search = page.getByRole("searchbox", { name: "Search Cleos Help Center articles" });
+  const search = page.getByRole("searchbox", { name: "Search Cleos Help Centre articles" });
   await search.fill("prescription");
   await expect(page.locator(".search-results a").first()).toBeVisible();
   await search.press("Enter");
@@ -36,7 +36,7 @@ test("search has a useful empty state and keyboard focus", async ({ page }, test
   await page.goto("./");
   await page.waitForLoadState("networkidle");
   await page.keyboard.press("Control+k");
-  const search = page.getByRole("searchbox", { name: "Search Cleos Help Center articles" });
+  const search = page.getByRole("searchbox", { name: "Search Cleos Help Centre articles" });
   await expect(search).toBeFocused();
   await search.fill("zzzz-no-match");
   await expect(page.getByText(/No results for/)).toBeVisible();
@@ -113,7 +113,7 @@ test("theme toggle persists across pages and reloads", async ({ page }, testInfo
   if (testInfo.project.name !== "tablet") {
     await page.screenshot({ path: testInfo.outputPath("dark-home.png"), fullPage: true });
   }
-  await page.getByRole("link", { name: /a typical clinic day/i }).click();
+  await page.getByRole("link", { name: /a single visit, start to finish/i }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
@@ -244,7 +244,7 @@ test("screenshot opens in-site, zooms, pans, and returns focus", async ({ page }
 });
 
 for (const [slug, count] of [
-  ["a-typical-clinic-day", 3],
+  ["a-single-visit-start-to-finish", 3],
   ["understand-waiting-in-progress-in-dispensary-and-completed", 4],
   ["add-or-update-a-prescription", 3],
   ["review-an-invoice", 3],
@@ -256,7 +256,7 @@ for (const [slug, count] of [
     await expect(visual.locator(".diagram-steps li")).toHaveCount(count);
     await expect(visual.getByText("Workflow illustration, not a Cleos screen.")).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)).toBe(false);
-    if (slug === "a-typical-clinic-day" && testInfo.project.name === "desktop") {
+    if (slug === "a-single-visit-start-to-finish" && testInfo.project.name === "desktop") {
       await page.screenshot({ path: testInfo.outputPath("clinic-flow.png"), fullPage: true });
     }
   });

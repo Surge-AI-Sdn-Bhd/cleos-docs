@@ -104,3 +104,9 @@
 :root[data-theme="dark"] .points p{color:var(--muted)}
 :root[data-theme="dark"] .check-card--note{background:#3a3320;border-color:#6b5c33}
 :root[data-theme="dark"] .check-card--note .check-icon{background:#5a4d29;color:#d8c079}
+.checklist{margin:0;padding:0;list-style:none}
+.checklist li{display:flex;gap:17px;border-top:1px solid var(--line);padding:18px 0}
+.checklist p{margin:2px 0 0;font-size:13px;color:#3c5148;line-height:1.75}
+.check-mark{display:grid;place-items:center;flex:none;width:31px;height:31px;border-radius:8px;background:#eaf5ed;color:var(--teal);font-weight:800;font-size:14px}
+:root[data-theme="dark"] .checklist p{color:var(--muted)}
+:root[data-theme="dark"] .check-mark{background:#1b3f34}
