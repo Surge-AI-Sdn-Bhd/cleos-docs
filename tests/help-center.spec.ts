@@ -14,7 +14,7 @@ test("home makes every topic reachable", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "All topics", exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: /good care starts/i })).toHaveCount(0);
   await expect(page.locator(".index-category")).toHaveCount(10);
-  await expect(page.locator(".index-group li a")).toHaveCount(62);
+  await expect(page.locator(".index-group li a")).toHaveCount(65);
   await expect(page.getByRole("complementary", { name: "Help topics" }).getByRole("link")).toHaveCount(10);
   await page.getByRole("complementary", { name: "Help topics" }).getByRole("link", { name: "Patients" }).click();
   await expect(page.getByRole("heading", { name: "Patients", exact: true })).toBeVisible();
@@ -190,6 +190,40 @@ test("expanded screenshot guides load across article topics", async ({ page }, t
       await expect.poll(() => figure.getByRole("img").evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
     }
   }
+});
+
+test("purchasing status references show the matching TEST screenshots", async ({ page }, testInfo) => {
+  await page.goto("./topics/inventory-and-suppliers/");
+  await expect(page.getByRole("heading", { name: "Purchasing and deliveries" })).toBeVisible();
+
+  const articles = [
+    { slug: "understand-purchase-requisition-statuses", title: "Understand purchase requisition statuses", count: 4, image: "purchase-requisition-statuses.png" },
+    { slug: "understand-purchase-order-statuses", title: "Understand purchase order statuses", count: 8, image: "purchase-order-statuses.png" },
+    { slug: "understand-delivery-order-statuses", title: "Understand delivery order statuses", count: 6, image: "delivery-order-statuses.png" },
+  ];
+  for (const item of articles) {
+    await page.goto(`./articles/${item.slug}/`);
+    await expect(page.getByRole("heading", { name: item.title })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Overview" })).toBeVisible();
+    await expect(page.locator(".points li")).toHaveCount(item.count);
+    await expect(page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", { name: "Inventory and suppliers" })).toBeVisible();
+    const visual = page.locator("#visual-guide");
+    const screenshot = visual.locator(".screenshot-figure img");
+    await expect(screenshot).toHaveAttribute("src", new RegExp(`/screens/${item.image}$`));
+    await expect.poll(() => screenshot.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth)).toBe(1920);
+    await visual.locator(".screenshot-trigger").click();
+    const viewer = page.getByRole("dialog", { name: "Screenshot viewer" });
+    await expect(viewer).toBeVisible();
+    await viewer.getByRole("button", { name: "Zoom in" }).click();
+    await expect(viewer.getByRole("button", { name: "Reset zoom" })).toHaveText("125%");
+    await viewer.getByRole("button", { name: "Close screenshot viewer" }).click();
+    await expect(viewer).not.toBeVisible();
+  }
+
+  await page.goto("./articles/understand-purchase-order-statuses/");
+  await expect(page.getByText(/Partially Received: linked delivery orders show that some items have been received/)).toBeVisible();
+  await expect(page.getByText(/A separate Voided status is not currently available for purchase orders/)).toBeVisible();
+  await page.screenshot({ path: testInfo.outputPath("purchase-order-statuses-article.png"), fullPage: true });
 });
 
 test("queue guide shows both entry points, with Queue first", async ({ page }) => {

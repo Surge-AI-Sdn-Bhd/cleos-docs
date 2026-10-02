@@ -26,6 +26,6 @@ for (const page of pages) {
   }
 }
 
-if (articles.length !== 62 || topics.length !== 10) broken.push(`Expected 62 articles and 10 topics; found ${articles.length} and ${topics.length}`);
+if (articles.length !== 65 || topics.length !== 10) broken.push(`Expected 65 articles and 10 topics; found ${articles.length} and ${topics.length}`);
 if (broken.length) { console.error(broken.join("\n")); process.exitCode = 1; }
 else console.log(`Checked ${pages.length} exported pages, ${articles.length} articles, ${topics.length} topics, internal links, and images.`);

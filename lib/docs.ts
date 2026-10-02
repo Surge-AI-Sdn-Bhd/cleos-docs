@@ -332,6 +332,32 @@ export const categories: DocCategory[] = [
         "Save and reopen the directory entry to confirm it is current.",
       ], "Follow your clinic's purchasing procedure for orders and deliveries."),
     ] },
+    { title: "Purchasing and deliveries", articles: [
+      article("Understand purchase requisition statuses", "See where a purchase requisition (PR) stands in the approval process.", "Staff with purchasing access", [
+        "Draft: the requisition is being prepared and has not been sent for approval.",
+        "Pending Approval: the requisition is waiting for a doctor's decision.",
+        "Approved: a doctor has approved the requisition.",
+        "Rejected: a doctor has rejected the requisition.",
+      ], "Check the requisition itself for the latest status before creating or changing a related order.", { format: "reference" }),
+      article("Understand purchase order statuses", "Track approval, supplier hand-off, and receipt of a purchase order (PO).", "Staff with purchasing access", [
+        "Draft: the order is being prepared.",
+        "Pending Approval: the order is waiting for a doctor's decision.",
+        "Approved: a doctor has approved the order.",
+        "Sent to Supplier: the order has been sent to the supplier.",
+        "Partially Received: linked delivery orders show that some items have been received, but the order is not complete.",
+        "Received: linked delivery orders show that all ordered items have been received.",
+        "Cancelled: the order has been cancelled.",
+        "Rejected: a doctor has rejected the order.",
+      ], "A separate Voided status is not currently available for purchase orders. Receiving status reflects linked delivery orders; check those records for item-level details.", { format: "reference" }),
+      article("Understand delivery order statuses", "See whether a delivery order (DO) has been confirmed and received.", "Staff with purchasing access", [
+        "Draft: the delivery order is being prepared.",
+        "Confirmed: the delivery order has been created, but no items have been received yet.",
+        "Partially Received: some items have been received, while others are still outstanding.",
+        "Received: all items on the delivery order have been received.",
+        "Rejected: the delivery order has been rejected.",
+        "Voided: the delivery order has been voided.",
+      ], "Check received quantities on the delivery order; a partially received order still has outstanding items.", { format: "reference" }),
+    ] },
   ]),
   category("Reports", "Choose the right figures, date range, and scope.", [
     { title: "Run reports", articles: [
