@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: "./tests",
   reporter: "list",
   use: {
-    baseURL: "http://127.0.0.1:3108/cleos-docs/",
+    baseURL: "http://127.0.0.1:3108/",
     browserName: "chromium",
     screenshot: "only-on-failure",
     trace: "retain-on-failure",
@@ -16,7 +16,7 @@ export default defineConfig({
   ],
   webServer: {
     command: "npm run preview",
-    url: "http://127.0.0.1:3108/cleos-docs/",
+    url: "http://127.0.0.1:3108/",
     reuseExistingServer: true,
     timeout: 120_000,
   },

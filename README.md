@@ -9,7 +9,7 @@ npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000/cleos-docs/`. The default `/cleos-docs` path matches the GitHub Pages project URL.
+Open `http://localhost:3000/`. The site is served from the root to match the `help.cleos.health` custom domain.
 
 ## Production build
 
@@ -21,9 +21,9 @@ npm run test:e2e
 
 The export appears in `out/`. The existing GitHub Actions workflow publishes this directory when approved changes reach `main`. No application server or database is required for the Help Centre.
 
-`npm run preview` serves that export at `http://127.0.0.1:3108/cleos-docs/`. The end-to-end suite runs Chromium against this production export at desktop, tablet, and mobile widths.
+`npm run preview` serves that export at `http://127.0.0.1:3108/`. The end-to-end suite runs Chromium against this production export at desktop, tablet, and mobile widths.
 
-For a future custom domain, first configure the domain and DNS in the repository's GitHub Pages settings. Then build with `CLEOS_DOCS_BASE_PATH=` (empty value) so routes are generated at the domain root; configure that value in the workflow when the domain is ready. Do not add a `CNAME` file or switch the base path before the domain is configured.
+The site is served from the custom domain `help.cleos.health`, so routes and assets are generated at the domain root. The `public/CNAME` file preserves the domain across deploys. To build for a GitHub Pages project subpath instead (e.g. for a staging fork), set `CLEOS_DOCS_BASE_PATH=/your-subpath` when building and previewing.
 
 ## Content
 

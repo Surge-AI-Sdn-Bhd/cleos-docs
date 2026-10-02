@@ -3,8 +3,8 @@ import { articleImages } from "../lib/article-images";
 
 test("uses the supplied Cleos logo in the header, footer, and tab", async ({ page }) => {
   await page.goto("./");
-  await expect(page.locator(".brand-logo")).toHaveAttribute("src", /\/cleos-docs\/cleos-logo\.png$/);
-  await expect(page.locator(".footer-logo")).toHaveAttribute("src", /\/cleos-docs\/cleos-logo\.png$/);
+  await expect(page.locator(".brand-logo")).toHaveAttribute("src", /\/cleos-logo\.png$/);
+  await expect(page.locator(".footer-logo")).toHaveAttribute("src", /\/cleos-logo\.png$/);
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", /\/icon\.png/);
   await expect.poll(() => page.locator(".brand-logo").evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
 });
@@ -164,7 +164,7 @@ for (const [slug, file] of [
     await expect(visual.getByRole("heading", { name: "Visual guide" })).toBeVisible();
     const image = visual.locator(`img[src$="/screens/${file}"]`);
     await expect(image).toHaveAttribute("alt", /.+/);
-    await expect(image).toHaveAttribute("src", new RegExp(`/cleos-docs/screens/${file}`));
+    await expect(image).toHaveAttribute("src", new RegExp(`/screens/${file}`));
     await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
     await expect(visual.locator("figcaption").first()).toBeVisible();
     await expect(visual.locator(".screenshot-trigger").first()).toBeVisible();

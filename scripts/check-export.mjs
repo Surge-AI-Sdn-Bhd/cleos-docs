@@ -2,7 +2,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 const root = resolve("out");
-const prefix = process.env.CLEOS_DOCS_BASE_PATH ?? "/cleos-docs";
+const prefix = process.env.CLEOS_DOCS_BASE_PATH ?? "";
 const articles = readdirSync(join(root, "articles"), { withFileTypes: true }).filter((entry) => entry.isDirectory());
 const topics = readdirSync(join(root, "topics"), { withFileTypes: true }).filter((entry) => entry.isDirectory());
 const pages = [join(root, "index.html"), ...articles.map((entry) => join(root, "articles", entry.name, "index.html")), ...topics.map((entry) => join(root, "topics", entry.name, "index.html"))];

@@ -3,7 +3,7 @@ import { readFile, stat } from "node:fs/promises";
 import { resolve, sep } from "node:path";
 
 const root = resolve("out");
-const prefix = process.env.CLEOS_DOCS_BASE_PATH ?? "/cleos-docs";
+const prefix = process.env.CLEOS_DOCS_BASE_PATH ?? "";
 const types = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json", ".svg": "image/svg+xml", ".ico": "image/x-icon", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".woff2": "font/woff2", ".txt": "text/plain" };
 
 createServer(async (request, response) => {

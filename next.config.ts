@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const basePath = process.env.CLEOS_DOCS_BASE_PATH ?? "/cleos-docs";
+const basePath = process.env.CLEOS_DOCS_BASE_PATH ?? "";
 
 const nextConfig: NextConfig = {
   output: "export",
